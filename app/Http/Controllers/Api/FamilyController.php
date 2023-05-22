@@ -7,6 +7,7 @@ use App\Http\Requests\Family\StoreFamilyRequest;
 use App\Http\Requests\Family\UpdateFamilyRequest;
 use App\Http\Resources\FamilyResource;
 use App\Models\Family;
+use Illuminate\Support\Facades\Storage;
 
 class FamilyController extends Controller
 {
@@ -32,6 +33,21 @@ class FamilyController extends Controller
     {
         $family = Family::create($request->validated());
 
+        if ($request->has('docs')) {
+            $docs = [];
+
+            foreach ($request->docs as $doc) {
+                $path = $family->id . '-' . date('Ymdis') . '-' . uniqid() . '.' . $doc->extension();
+                $docs[] = $path;
+
+                Storage::put($path, file_get_contents($doc));
+            }
+
+            $family->update([
+                'docs' => $docs,
+            ]);
+        }
+
         return (new FamilyResource($family))->response()->setStatusCode(201);
     }
 
@@ -51,6 +67,21 @@ class FamilyController extends Controller
     public function update(UpdateFamilyRequest $request, Family $family)
     {
         $family->update($request->validated());
+
+        if ($request->has('docs')) {
+            $docs = [];
+
+            foreach ($request->docs as $doc) {
+                $path = $family->id . '-' . date('Ymdis') . '-' . uniqid() . '.' . $doc->extension();
+                $docs[] = $path;
+
+                Storage::put($path, file_get_contents($doc));
+            }
+
+            $family->update([
+                'docs' => $docs,
+            ]);
+        }
 
         return (new FamilyResource($family))->response()->setStatusCode(200);
     }
@@ -95,7 +126,8 @@ class FamilyController extends Controller
 
         $this->authorize('delete', $family);
 
-        $family->restore();
+        Storage::delete($family->docs);
+        $family->forceDelete();
 
         return response()->json([
             'message' => 'Family force deleted successfully.',
