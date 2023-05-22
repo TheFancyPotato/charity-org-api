@@ -36,5 +36,12 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        Route::macro('apiResourceWithSoftDeletes', function (string $name, string $controller, array $options = []) {
+            Route::apiResource($name, $controller, $options);
+
+            Route::post($name . '/restore/{family}', [$controller, 'restore'])->name($name . '.restore');
+            Route::delete($name . '/force/{family}', [$controller, 'forceDelete'])->name($name . '.forceDelete');
+        });
     }
 }
