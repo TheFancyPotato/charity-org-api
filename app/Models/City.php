@@ -13,6 +13,8 @@ class City extends Model
         'name',
     ];
 
+    public $timestamps = false;
+
     //---------------------------------------------------
     // Relationships
     //---------------------------------------------------
