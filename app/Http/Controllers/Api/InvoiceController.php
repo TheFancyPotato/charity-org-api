@@ -18,7 +18,7 @@ class InvoiceController extends Controller
         $this->authorize('viewAny', Invoice::class);
 
         return InvoiceResource::collection(Invoice::query()->paginate(
-            perPage: request('per_page'),
+            perPage: request('perPage'),
             page: request('page'),
         ));
     }
@@ -85,7 +85,7 @@ class InvoiceController extends Controller
     /**
      * Delete the specified resource from storage.
      */
-    public function forceDelete(Invoice $invoice)
+    public function forceDelete(int $invoice)
     {
         $invoice = Invoice::onlyTrashed()->findOrFail($invoice);
 

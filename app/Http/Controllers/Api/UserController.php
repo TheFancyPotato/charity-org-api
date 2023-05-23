@@ -18,8 +18,8 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
 
         return UserResource::collection(
-            User::query()->select('id', 'name', 'email', 'role')->paginate(
-                perPage: request('per_page'),
+            User::query()->select('id', 'name', 'username', 'role')->paginate(
+                perPage: request('perPage'),
                 page: request('page'),
             )
         );
@@ -65,8 +65,6 @@ class UserController extends Controller
         $user->tokens()->delete();
         $user->delete();
 
-        return response()->json([
-            'message' => 'User deleted successfully',
-        ], 204);
+        return response(status: 204);
     }
 }

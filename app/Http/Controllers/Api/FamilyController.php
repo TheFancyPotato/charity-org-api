@@ -88,7 +88,7 @@ class FamilyController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Move the specified resource to trash.
      */
     public function destroy(Family $family)
     {
@@ -96,9 +96,7 @@ class FamilyController extends Controller
 
         $family->delete();
 
-        return response()->json([
-            'message' => 'Family deleted successfully.',
-        ]);
+        return response(status: 204);
     }
 
     /**
@@ -112,14 +110,12 @@ class FamilyController extends Controller
 
         $family->restore();
 
-        return response()->json([
-            'message' => 'Family restored successfully.',
-        ]);
+        return response(status: 204);
     }
 
 
     /**
-     * Restore the specified resource from trash.
+     * Delete the specified resource from storage.
      */
     public function forceDelete($family)
     {
@@ -130,8 +126,6 @@ class FamilyController extends Controller
         Storage::delete($family->docs);
         $family->forceDelete();
 
-        return response()->json([
-            'message' => 'Family force deleted successfully.',
-        ]);
+        return response(status: 204);
     }
 }

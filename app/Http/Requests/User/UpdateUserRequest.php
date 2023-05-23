@@ -33,7 +33,7 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 'alpha_dash',
                 'max:255',
-                'unique:users,username',
+                'unique:users,username,' . $this->user->id,
             ],
             'password' => ['nullable', 'confirmed', 'min:8'],
             'role' => ['required', new Enum(UserRole::class)],

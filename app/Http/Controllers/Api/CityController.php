@@ -19,7 +19,7 @@ class CityController extends Controller
 
         return CityResource::collection(
             City::query()->withCount('families')->paginate(
-                perPage: request('per_page'),
+                perPage: request('perPage'),
                 page: request('page'),
             )
         );
