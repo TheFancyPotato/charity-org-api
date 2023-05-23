@@ -45,4 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'role' => UserRole::class,
     ];
+
+    //---------------------------------------------------
+    // Relationships
+    //---------------------------------------------------
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

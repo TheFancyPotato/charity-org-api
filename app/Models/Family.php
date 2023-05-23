@@ -60,4 +60,9 @@ class Family extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }
