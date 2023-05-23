@@ -2,10 +2,8 @@
 
 namespace App\Policies;
 
-use App\Enums\UserRole;
 use App\Models\Family;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class FamilyPolicy
 {
@@ -14,7 +12,7 @@ class FamilyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role->canRead();
     }
 
     /**
@@ -22,7 +20,7 @@ class FamilyPolicy
      */
     public function view(User $user, Family $family): bool
     {
-        return true;
+        return $user->role->canRead();
     }
 
     /**
@@ -30,7 +28,7 @@ class FamilyPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->canWrite();
     }
 
     /**
@@ -38,7 +36,7 @@ class FamilyPolicy
      */
     public function update(User $user, Family $family): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->canWrite();
     }
 
     /**
@@ -46,7 +44,7 @@ class FamilyPolicy
      */
     public function delete(User $user, Family $family): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->canWrite();
     }
 
     /**
@@ -54,7 +52,7 @@ class FamilyPolicy
      */
     public function restore(User $user, Family $family): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->canWrite();
     }
 
     /**
@@ -62,6 +60,6 @@ class FamilyPolicy
      */
     public function forceDelete(User $user, Family $family): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->isSuperadmin();
     }
 }

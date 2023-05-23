@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\UserRole;
 use App\Models\City;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CityPolicy
 {
@@ -14,7 +13,7 @@ class CityPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role->canRead();
     }
 
     /**
@@ -22,7 +21,7 @@ class CityPolicy
      */
     public function view(User $user, City $city): bool
     {
-        return true;
+        return $user->role->canRead();
     }
 
     /**
@@ -30,7 +29,7 @@ class CityPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->canWrite();
     }
 
     /**
@@ -38,7 +37,7 @@ class CityPolicy
      */
     public function update(User $user, City $city): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->canWrite();
     }
 
     /**
@@ -46,6 +45,6 @@ class CityPolicy
      */
     public function delete(User $user, City $city): bool
     {
-        return $user->role == UserRole::RW;
+        return $user->role->canWrite();
     }
 }
