@@ -48,6 +48,16 @@ class Family extends Model
             'notes' => ['nullable', 'string', 'max:1000'],
             'docs' => ['nullable', 'array'],
             'docs.*' => ['nullable', 'file', 'max:1024'],
+            'city_id' => ['nullable', 'exists:cities,id'],
         ];
+    }
+
+    //---------------------------------------------------
+    // Relationships
+    //---------------------------------------------------
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

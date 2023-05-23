@@ -29,6 +29,9 @@ return new class extends Migration
             $table->text('other_orgs')->nullable();
             $table->text('notes')->nullable();
             $table->json('docs')->nullable();
+
+            $table->foreignId('city_id')->nullable()->constrained()->onDelete('set null');
+
             $table->softDeletes();
             $table->timestamps();
         });
