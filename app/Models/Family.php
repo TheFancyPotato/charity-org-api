@@ -7,6 +7,7 @@ use App\Enums\FamilyType;
 use App\Enums\HousingType;
 use App\Enums\IncomeType;
 use App\Enums\ProviderSocialStatus;
+use App\QueryBuilders\FamilyQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,6 +51,11 @@ class Family extends Model
             'docs.*' => ['nullable', 'file', 'max:1024'],
             'city_id' => ['nullable', 'exists:cities,id'],
         ];
+    }
+
+    public function newEloquentBuilder($builder)
+    {
+        return new FamilyQueryBuilder($builder);
     }
 
     //---------------------------------------------------
