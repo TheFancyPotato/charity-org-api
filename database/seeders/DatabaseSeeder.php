@@ -15,5 +15,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SuperadminSeeder::class,
         ]);
+
+        // development and testing environments seeders.
+        if (!app()->isProduction()) {
+            $this->call([
+                FakeDataSeeder::class,
+            ]);
+        }
     }
 }
