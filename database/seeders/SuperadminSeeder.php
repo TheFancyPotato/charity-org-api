@@ -17,7 +17,7 @@ class SuperadminSeeder extends Seeder
     {
         User::create([
             'name' => 'Superadmin',
-            'email' => 'superadmin@example.com',
+            'username' => 'superadmin',
             'password' => Hash::make('12345678'),
             'role' => UserRole::Superadmin,
         ]);

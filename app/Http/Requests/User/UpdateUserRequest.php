@@ -28,11 +28,12 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:2', 'max:255'],
-            'email' => [
+            'username' => [
                 'required',
-                'email',
+                'string',
+                'alpha_dash',
                 'max:255',
-                'unique:users,email,' . $this->user->id
+                'unique:users,username',
             ],
             'password' => ['nullable', 'confirmed', 'min:8'],
             'role' => ['required', new Enum(UserRole::class)],
