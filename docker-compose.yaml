@@ -31,6 +31,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    volumes:
+      - /data/mysql:/var/lib/mysql
     networks:
       - charity-org
 
