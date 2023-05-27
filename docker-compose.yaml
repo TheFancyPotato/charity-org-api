@@ -1,0 +1,51 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: charity
+        uid: 1000
+      context: .
+      dockerfile: Dockerfile
+    image: charity-org-api
+    container_name: charity-org-api
+    restart: unless-stopped
+    working_dir: /var/www/
+    links:
+      - db
+    volumes:
+      - ./:/var/www
+    networks:
+      - charity-org
+
+  db:
+    image: mysql:8.0
+    container_name: charity-org-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - charity-org
+
+  nginx:
+    image: nginx:alpine
+    container_name: charity-org-nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - charity-org
+
+networks:
+  charity-org:
+    driver: bridge
