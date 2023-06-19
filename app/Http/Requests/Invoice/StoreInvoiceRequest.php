@@ -24,7 +24,7 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'family_id' => ['required', 'exists:familes,id'],
+            'family_id' => ['required', 'exists:families,id'],
             'amount' => ['required', 'integer', 'min:0', 'max:5000000'],
             'description' => ['nullable', 'string', 'max:1000'],
         ];

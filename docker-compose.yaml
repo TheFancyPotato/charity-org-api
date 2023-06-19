@@ -44,7 +44,7 @@ services:
       - 80:80
     volumes:
       - ./:/var/www
-      - ./docker-compose/nginx:/etc/nginx/conf.d/
+      - ./nginx:/etc/nginx/conf.d/
     networks:
       - charity-org
 
