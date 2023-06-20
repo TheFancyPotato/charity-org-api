@@ -19,6 +19,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Logged in successfully',
+            'user_id' => $request->user()->id,
             'token' => $request->user()->createToken('authToken')->plainTextToken,
         ]);
     }
