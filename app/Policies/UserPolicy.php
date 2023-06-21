@@ -19,7 +19,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->role->isSuperadmin();
+        return $user->role->isSuperadmin() || $user->id == $model->id;
     }
 
     /**
@@ -35,7 +35,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->role->isSuperadmin();
+        return $user->role->isSuperadmin() || $user->id == $model->id;
     }
 
     /**
