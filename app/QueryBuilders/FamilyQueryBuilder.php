@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Schema;
 
 class FamilyQueryBuilder extends Builder
 {
+    public function applySearch(string $search)
+    {
+        $this->where('provider_name', 'like', '%' . $search . '%');
+
+        return $this;
+    }
+
     public function applySorting(array $sorting)
     {
         $this->orderBy(
@@ -26,11 +33,7 @@ class FamilyQueryBuilder extends Builder
                 continue;
             }
 
-            if (is_array($val)) {
-                $this->whereIn($key, $val);
-            } else {
-                $this->where($key, $val);
-            }
+            $this->whereIn($key, explode(',', $val));
         }
 
         return $this;

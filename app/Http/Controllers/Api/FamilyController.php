@@ -18,12 +18,17 @@ class FamilyController extends Controller
     {
         $this->authorize('viewAny', Family::class);
 
+        $search = request('search', '');
         $sorting = request('sorting', []);
         $filters = request('filters', []);
         $perPage = request('perPage', 25);
 
         return FamilyResource::collection(
-            Family::query()->applyFilters($filters)->applySorting($sorting)->paginate(perPage: $perPage),
+            Family::query()
+                ->applySearch($search)
+                ->applyFilters($filters)
+                ->applySorting($sorting)
+                ->paginate(perPage: $perPage),
         );
     }
 
