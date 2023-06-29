@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\FamilyInvoicesController;
 use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Auth Routes
     Route::post('auth/logout', [AuthController::class, 'logout']);
+
+    // Profile Routes
+    Route::get('profile/details', [ProfileController::class, 'details']);
+    Route::put('profile/update', [ProfileController::class, 'update']);
 });
