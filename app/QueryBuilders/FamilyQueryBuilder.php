@@ -9,7 +9,8 @@ class FamilyQueryBuilder extends Builder
 {
     public function applySearch(string $search)
     {
-        $this->where('provider_name', 'like', '%' . $search . '%');
+        $this->where('provider_name', 'like', '%' . $search . '%')
+            ->orWhere('provider_phone', 'like', '%' . $search . '%');
 
         return $this;
     }
