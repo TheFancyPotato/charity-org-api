@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('cities', CityController::class);
 
     // Families Routes
-    Route::apiResourceWithSoftDeletes('families', FamilyController::class);
+    Route::apiResourceWithSoftDeletes('families', FamilyController::class, ['except' => ['forceDelete']]);
     Route::get('/families/{family}/invoices', FamilyInvoicesController::class);
 
     // Invoices Routes

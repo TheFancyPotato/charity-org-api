@@ -124,13 +124,6 @@ class FamilyController extends Controller
      */
     public function forceDelete($family)
     {
-        $family = Family::onlyTrashed()->findOrFail($family);
-
-        $this->authorize('delete', $family);
-
-        Storage::delete($family->docs);
-        $family->forceDelete();
-
-        return response(status: 204);
+        return response(status: 501);
     }
 }
