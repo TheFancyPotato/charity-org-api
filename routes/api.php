@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\FamilyInvoicesController;
+use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
@@ -15,6 +16,8 @@ Route::post('auth/login', [AuthController::class, 'login']);
 // Protected Routes
 //------------------------------------------------------------
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('home', HomeController::class);
+
     // Users Routes
     Route::apiResourceWithSoftDeletes('users', UserController::class, ['except' => ['forceDelete']]);
 
