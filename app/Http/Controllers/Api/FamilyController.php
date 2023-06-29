@@ -28,7 +28,8 @@ class FamilyController extends Controller
                 ->applySearch($search)
                 ->applyFilters($filters)
                 ->applySorting($sorting)
-                ->paginate(perPage: $perPage),
+                ->paginate(perPage: $perPage)
+                ->withQueryString(),
         );
     }
 
