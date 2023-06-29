@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->tinyInteger('role');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

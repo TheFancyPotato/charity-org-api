@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -40,8 +41,15 @@ class RouteServiceProvider extends ServiceProvider
         Route::macro('apiResourceWithSoftDeletes', function (string $name, string $controller, array $options = []) {
             Route::apiResource($name, $controller, $options);
 
-            Route::post($name . '/restore/{family}', [$controller, 'restore'])->name($name . '.restore');
-            Route::delete($name . '/force/{family}', [$controller, 'forceDelete'])->name($name . '.forceDelete');
+
+
+            if (!in_array('restore', $options['except'] ?? [])) {
+                Route::post($name . '/restore/{' . Str::camel(Str::singular($name)) . '}', [$controller, 'restore'])->name($name . '.restore');
+            }
+
+            if (!in_array('forceDelete', $options['except'] ?? [])) {
+                Route::delete($name . '/force/{' . Str::camel(Str::singular($name)) . '}', [$controller, 'forceDelete'])->name($name . '.forceDelete');
+            }
         });
     }
 }

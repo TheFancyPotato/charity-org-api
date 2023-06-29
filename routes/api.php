@@ -15,7 +15,7 @@ Route::post('auth/login', [AuthController::class, 'login']);
 //------------------------------------------------------------
 Route::middleware('auth:sanctum')->group(function () {
     // Users Routes
-    Route::apiResource('users', UserController::class);
+    Route::apiResourceWithSoftDeletes('users', UserController::class, ['except' => ['forceDelete']]);
 
     // Cities Routes
     Route::apiResource('cities', CityController::class);

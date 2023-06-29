@@ -67,4 +67,27 @@ class UserController extends Controller
 
         return response(status: 204);
     }
+
+    /**
+     * Restore the specified resource from trash.
+     */
+    public function restore(int $user)
+    {
+        $user = User::onlyTrashed()->findOrFail($user);
+
+        $this->authorize('restore', $user);
+
+        $user->restore();
+
+        return response(status: 204);
+    }
+
+
+    /**
+     * Delete the specified resource from storage.
+     */
+    public function forceDelete($user)
+    {
+        return response(status: 501);
+    }
 }
