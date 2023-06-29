@@ -20,6 +20,7 @@ class InvoiceResource extends JsonResource
             'description' => $this->description,
             'family_id' => $this->family_id,
             'family' => $this->whenLoaded('family'),
+            'user_id' => $this->user_id,
         ];
     }
 }
