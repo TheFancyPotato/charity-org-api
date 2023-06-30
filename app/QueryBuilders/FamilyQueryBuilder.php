@@ -34,7 +34,11 @@ class FamilyQueryBuilder extends Builder
                 continue;
             }
 
-            $this->whereIn($key, explode(',', $val));
+            if (is_array($val)) {
+                $this->whereIn($key, $val);
+            } else {
+                $this->where($key, $val);
+            }
         }
 
         return $this;
