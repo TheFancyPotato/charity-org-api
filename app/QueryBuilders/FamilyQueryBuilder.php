@@ -7,6 +7,21 @@ use Illuminate\Support\Facades\Schema;
 
 class FamilyQueryBuilder extends Builder
 {
+    public function applySelect($select)
+    {
+        if ($select != null) {
+            $availableColumns = Schema::getColumnListing('families');
+
+            $columns = array_filter(explode(',', $select), function ($column) use ($availableColumns) {
+                return in_array($column, $availableColumns);
+            });
+
+            return $this->select($columns);
+        }
+
+        return $this;
+    }
+
     public function applySearch(string $search)
     {
         $this->where('provider_name', 'like', '%' . $search . '%')
