@@ -25,9 +25,9 @@ class FamilyController extends Controller
 
         return FamilyResource::collection(
             Family::query()
-                ->when($search, fn ($query) => $query->applySearch($search))
                 ->applyFilters($filters)
                 ->applySorting($sorting)
+                ->when($search, fn ($query) => $query->applySearch($search))
                 ->paginate(perPage: $perPage)
                 ->withQueryString(),
         );
