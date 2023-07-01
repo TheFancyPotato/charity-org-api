@@ -39,9 +39,11 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::macro('apiResourceWithSoftDeletes', function (string $name, string $controller, array $options = []) {
+            if (!in_array('trash', $options['except'] ?? [])) {
+                Route::get($name . '/trash', [$controller, 'trash'])->name($name . '.trash');
+            }
+
             Route::apiResource($name, $controller, $options);
-
-
 
             if (!in_array('restore', $options['except'] ?? [])) {
                 Route::post($name . '/restore/{' . Str::camel(Str::singular($name)) . '}', [$controller, 'restore'])->name($name . '.restore');

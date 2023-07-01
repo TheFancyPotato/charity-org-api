@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('home', HomeController::class);
 
     // Users Routes
-    Route::apiResourceWithSoftDeletes('users', UserController::class, ['except' => ['forceDelete']]);
+    Route::apiResourceWithSoftDeletes('users', UserController::class, ['except' => ['forceDelete', 'trash']]);
 
     // Cities Routes
     Route::apiResource('cities', CityController::class);
@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/families/{family}/invoices', FamilyInvoicesController::class);
 
     // Invoices Routes
-    Route::apiResourceWithSoftDeletes('invoices', InvoiceController::class);
+    Route::apiResourceWithSoftDeletes('invoices', InvoiceController::class, ['except' => ['trash']]);
 
     // Auth Routes
     Route::post('auth/logout', [AuthController::class, 'logout']);

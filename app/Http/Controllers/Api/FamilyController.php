@@ -108,6 +108,31 @@ class FamilyController extends Controller
     }
 
     /**
+     * Display a listing of the trashed resources.
+     */
+    public function trash()
+    {
+        $this->authorize('viewTrash', Family::class);
+
+        $select = request('select');
+        $search = request('search');
+        $sorting = request('sorting', []);
+        $filters = request('filters', []);
+        $perPage = request('perPage', 25);
+
+        return FamilyResource::collection(
+            Family::query()
+                ->onlyTrashed()
+                ->applySelect($select)
+                ->applyFilters($filters)
+                ->applySorting($sorting)
+                ->when($search, fn ($query) => $query->applySearch($search))
+                ->paginate(perPage: $perPage)
+                ->withQueryString(),
+        );
+    }
+
+    /**
      * Restore the specified resource from trash.
      */
     public function restore(int $family)
