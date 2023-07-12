@@ -14,7 +14,7 @@ class UpdateProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('update', $this->user);
+        return Gate::allows('update', auth()->user());
     }
 
     /**

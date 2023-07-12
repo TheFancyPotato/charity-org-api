@@ -29,7 +29,7 @@ class ProfileController extends Controller
             $data['password'] = Hash::make($request->password);
         }
 
-        $user->update($data);
+        $user->update(array_filter($data, fn ($item) => $item != null));
 
         return new UserResource($user);
     }
