@@ -15,6 +15,6 @@ class FamilyInvoicesController extends Controller
     {
         $this->authorize('view', $family);
 
-        return InvoiceResource::collection($family->invoices()->orderBy('id', 'desc')->paginate(30));
+        return InvoiceResource::collection($family->invoices()->with('user:id,name,username')->orderBy('id', 'desc')->paginate(30));
     }
 }
