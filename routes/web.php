@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return 'hello';
 });
+
+Route::get('/form-builder', function () {
+    return view('form-builder');
+});
